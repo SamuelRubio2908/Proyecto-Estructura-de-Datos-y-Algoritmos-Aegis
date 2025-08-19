@@ -106,6 +106,3 @@ En Python se implementa con heapq.
    - Ambos nodos deben existir en el grafo (no se permite buscar rutas entre nodos inexistentes).
 4.	Ruta única o múltiple:
    - Si hay varias rutas con el mismo riesgo total, el algoritmo devuelve una de ellas (no todas).
-5.	Límites de tamaño:
-   - Para la versión simple, el grafo debe ser de tamaño pequeño o mediano (ej. hasta 200 nodos).
-   - Para la versión optimizada, se pueden manejar redes mucho más grandes
