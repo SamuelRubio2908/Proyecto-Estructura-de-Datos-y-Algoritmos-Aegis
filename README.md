@@ -10,18 +10,89 @@ Finalmente vamos con el ámbito social, el cual podríamos ver la suplantación 
 Para concluir, al encontrar las afectaciones mencionadas anteriormente podemos ver que puede ser algo muy peligroso al estar en un mundo tan digitalizado y donde la información es tan importante. Por lo tanto, si no hayamos una solución para esta problemática, sabemos que existe varios sistemas de protección pero ninguna está especializada en el trato de datos. Además, la evolución de la tecnología ha hecho que los atacantes desarrollen métodos mas sofisticados, y por tanto se puede evidenciar que hay una necesidad de implementar mecanismos de seguridad más fuertes y robustos. Por ello es una prioridad que haya nuevas implementaciones en la seguridad digital.
 Nuestra motivación para abarcar esta problemática es que, como próximos ingenieros informáticos debemos pensar en que problemáticas hay en la era digital en la que nos encontramos ya que nosotros también hacemos parte de la generación que está recibiendo estos cambios y problemas, y los tendremos que abordar en los próximos años. Adicionalmente, cuando tomamos la decisión de formarnos también nos surgió la duda de en qué podríamos aportar al mundo y este proyecto fue una posible respuesta a esa pregunta.
 
+
+
+
+
 ## Solución Formal
-Descripción
+#### Código GCL
+El algoritmo de Dijkstra es una técnica que nos permite encontrar el camino más corto (o en nuestro caso, el camino más seguro) entre un punto de origen y un destino dentro de un grafo ponderado.
+
+En el grafo:
+Los nodos representan puntos de conexión (por ejemplo, dispositivos, routers o servidores en una red).
+Las aristas representan los enlaces entre esos nodos (las posibles conexiones).
+El peso de cada arista representa el “riesgo” o nivel de inseguridad de esa conexión (entre más bajo, más segura es).
+
+Nota: Como en nuestro proyecto el objetivo no es buscar rapidez sino seguridad, interpretamos los pesos como “riesgos de la red”, y buscamos el camino donde la suma de esos riesgos sea la menor posible.
+
+Cómo Funciona:
+   - Se asume que al inicio, todos los nodos están infinitamente lejos del origen (dist[i] = ∞).
+   - El único nodo con distancia conocida es el de origen, al cual le asignamos 0.
+   - Uso de un min-heap (cola de prioridad, en el cúal cada elemento que ingresa tiene cierta prioridad, y entre más prioridad, más al final está, es decir, el que tiene mayor prioridad sale primero. No importa el orden en que ingresen, se posicionarán segun su prioridad)
+   - Aquí guardamos siempre el nodo más prometedor a visitar, es decir, el que hasta ahora tiene la distancia más baja.
+   - Exploración de vecinos (relajación)
+   - Tomamos el nodo más cercano (o más seguro en nuestro caso).
+   - Revisamos sus vecinos: si llegar a ellos a través del nodo actual resulta en una distancia menor (un camino más seguro), entonces actualizamos esa distancia.
+   - Reconstrucción del camino
+   - Cuando llegamos al destino, usamos el arreglo de previo[] para reconstruir cuál fue el camino seguido.
+
+En resumen: Dijkstra va expandiendo paso a paso las rutas más prometedoras y se detiene cuando encuentra la mejor posible para llegar al destino.
+
+#### Código Python
+El código en Python se apoya en una estructura llamada heapq, que permite manejar una cola de prioridad de forma eficiente.
+
+Cómo funciona:
+   - Se prepara una lista de distancias, marcando todas como infinitas, excepto el nodo origen que arranca en 0.
+   - Se mete el origen a la cola de prioridad.
+   - Mientras haya nodos en la cola, se va sacando el más prometedor.
+   - Se actualizan las distancias de los vecinos si encontramos un camino más corto (más seguro).
+   - Al final, se reconstruye el camino usando el arreglo previo.
+
 
 ## Análisis de complejidad
-tiempo y espacio en notación Big-O
+### Tiempo
+El algoritmo de Dijkstra, cuando se implementa con un min-heap, que es la cola de prioridad, tiene la siguiente complejidad en tiempo:
+
+Cada nodo puede ser insertado en la cola de prioridad varias veces, que es cuando se actualizan distancias.
+En el peor caso, se hacen hasta m inserciones y n extracciones, donde:
+
+n = número de nodos.
+m = número de aristas.
+
+Cada operación sobre el heap, osea, insertar o extraer mínimo, cuesta O(log n).
+
+Por eso, el tiempo total es:
+O((n+m) * log n)
+
+Aunque en grafos densos, es decir, con muchas aristas, esto se suele simplificar a:
+𝑂(𝑚 * log 𝑛)
+
+### Espacio
+El algoritmo de Dijkstra también necesita memoria extra además del grafo.
+El grafo mismo, si está representado con listas de adyacencia, ocupa O(n + m), porque cada nodo guarda sus vecinos y pesos.
+Los arreglos auxiliares (dist, previo, visitado) ocupan O(n).
+La cola de prioridad min-heap puede crecer hasta O(m) en el peor caso (cuando muchas aristas actualizan distancias).
+
+Por lo tanto, el peso total en el espacio seria de:
+O(n+m)
 
 ## Estructuras de datos usadas
-1. Lista de adyacencia: Representa el grafo como un diccionario {nodo: [(vecino, riesgo), ...]}.
+1. Lista de adyacencia: Representa el grafo como un diccionario o lista de listas. Tendría una estructura así:
+   {nodo: [(vecino, riesgo), ...]}>
+   Por ejemplo:
+   grafo = {
+     0: [(1, 5), (2, 2)], 
+     1: [(2, 1)], 
+     2: [(3, 3)] }}
+   
    - Ventaja: eficiente en memoria cuando el grafo es disperso.
-   - Justificación: más realista para redes donde no todos los nodos están conectados entre sí.
-2. Arreglo dist[]: Guarda el riesgo acumulado mínimo desde el nodo inicial hasta cada nodo.
-3. Arreglo prev[]: Permite reconstruir la ruta más segura al final del algoritmo.
+   - ¿Por qué?: más realista para redes donde no todos los nodos están conectados entre sí.
+   
+3. Arreglo dist[]: Guarda el riesgo acumulado mínimo desde el nodo inicial hasta cada nodo.
+4. Arreglo prev[]: Permite reconstruir la ruta más segura al final del algoritmo.
+5. Cola de prioridad (mean-heap): Se usa para elegir siempre el nodo “más prometedor”, es decir, el de menor riesgo acumulado hasta ese momento.
+En Python se implementa con heapq.
+
 
 ## Restricciones
 1.	Pesos de las aristas:
