@@ -1,0 +1,33 @@
+fun ruta_segura_opt (G: array of list of (int,int), s: int, t: int)
+    ret ruta: list of int, riesgo_total: int
+
+var n, u, v, riesgo, nodo: int
+var dist: array [0:n) of int
+var previo: array [0:n) of int
+var visitado: array [0:n) of bool
+var Q: min_heap of (dist, nodo)
+
+n := length(G)
+for i := 0 to n-1 →
+    dist[i] := ∞; previo[i] := -1; visitado[i] := false
+rof
+dist[s] := 0
+heap_push(Q, (0, s))
+
+do ¬heap_empty(Q) →
+    ( _, u ) := heap_pop_min(Q)
+    if visitado[u] → skip [] ¬visitado[u] → visitado[u] := true fi
+
+    for cada (v, riesgo) ∈ G[u] →
+        if ¬visitado[v] ∧ dist[u] + riesgo < dist[v] →
+            dist[v] := dist[u] + riesgo
+            previo[v] := u
+            heap_push(Q, (dist[v], v))  -- modela decrease-key
+        fi
+    rof
+od
+
+-- reconstrucción como antes
+ruta := []; nodo := t
+do nodo ≠ -1 → insertar_al_inicio(ruta, nodo); nodo := previo[nodo] od
+riesgo_total := dist[t]
