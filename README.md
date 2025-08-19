@@ -10,11 +10,11 @@ Finalmente vamos con el ámbito social, el cual podríamos ver la suplantación 
 Para concluir, al encontrar las afectaciones mencionadas anteriormente podemos ver que puede ser algo muy peligroso al estar en un mundo tan digitalizado y donde la información es tan importante. Por lo tanto, si no hayamos una solución para esta problemática, sabemos que existe varios sistemas de protección pero ninguna está especializada en el trato de datos. Además, la evolución de la tecnología ha hecho que los atacantes desarrollen métodos mas sofisticados, y por tanto se puede evidenciar que hay una necesidad de implementar mecanismos de seguridad más fuertes y robustos. Por ello es una prioridad que haya nuevas implementaciones en la seguridad digital.
 Nuestra motivación para abarcar esta problemática es que, como próximos ingenieros informáticos debemos pensar en que problemáticas hay en la era digital en la que nos encontramos ya que nosotros también hacemos parte de la generación que está recibiendo estos cambios y problemas, y los tendremos que abordar en los próximos años. Adicionalmente, cuando tomamos la decisión de formarnos también nos surgió la duda de en qué podríamos aportar al mundo y este proyecto fue una posible respuesta a esa pregunta.
 
-##Solución Formal
+## Solución Formal
 Descripción
 
-##Estructuras de datos usadas
+## Estructuras de datos usadas
 Descripción
 
-##Análisis de complejidad
+## Análisis de complejidad
 tiempo y espacio en notación Big-O
