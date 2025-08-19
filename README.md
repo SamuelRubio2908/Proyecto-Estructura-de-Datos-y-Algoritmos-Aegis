@@ -13,11 +13,15 @@ Nuestra motivación para abarcar esta problemática es que, como próximos ingen
 ## Solución Formal
 Descripción
 
-## Estructuras de datos usadas
-Descripción
-
 ## Análisis de complejidad
 tiempo y espacio en notación Big-O
+
+## Estructuras de datos usadas
+1. Lista de adyacencia: Representa el grafo como un diccionario {nodo: [(vecino, riesgo), ...]}.
+   - Ventaja: eficiente en memoria cuando el grafo es disperso.
+   - Justificación: más realista para redes donde no todos los nodos están conectados entre sí.
+2. Arreglo dist[]: Guarda el riesgo acumulado mínimo desde el nodo inicial hasta cada nodo.
+3. Arreglo prev[]: Permite reconstruir la ruta más segura al final del algoritmo.
 
 ## Restricciones
 1.	Pesos de las aristas:
