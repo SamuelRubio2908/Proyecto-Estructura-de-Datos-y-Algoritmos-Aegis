@@ -98,7 +98,6 @@ En Python se implementa con heapq.
 1.	Pesos de las aristas:
    - Deben ser enteros positivos.
    - Se definen en un rango, por ejemplo 1 = muy seguro, 10 = muy vulnerable.
-   - No puede haber valores negativos.
 2.	Conectividad del grafo:
    - El grafo debe ser conexo, es decir, que exista al menos una ruta entre cualquier par de nodos.
    - Si el grafo no es conexo, el algoritmo debe indicar que no existe ruta segura.
