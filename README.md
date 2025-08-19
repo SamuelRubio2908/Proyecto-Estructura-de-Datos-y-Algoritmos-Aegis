@@ -21,17 +21,17 @@ tiempo y espacio en notación Big-O
 
 ## Restricciones
 1.	Pesos de las aristas:
-	•	Deben ser enteros positivos.
-	•	Se definen en un rango, por ejemplo 1 = muy seguro, 10 = muy vulnerable.
-	•	No puede haber valores negativos.
+•	Deben ser enteros positivos.
+•	Se definen en un rango, por ejemplo 1 = muy seguro, 10 = muy vulnerable.
+•	No puede haber valores negativos.
 2.	Conectividad del grafo:
-	•	El grafo debe ser conexo, es decir, que exista al menos una ruta entre cualquier par de nodos.
-	•	Si el grafo no es conexo, el algoritmo debe indicar que no existe ruta segura.
+•	El grafo debe ser conexo, es decir, que exista al menos una ruta entre cualquier par de nodos.
+•	Si el grafo no es conexo, el algoritmo debe indicar que no existe ruta segura.
 3.	Entrada válida:
-	•	Se debe especificar un nodo de inicio y un nodo destino.
-	•	Ambos nodos deben existir en el grafo (no se permite buscar rutas entre nodos inexistentes).
+•	Se debe especificar un nodo de inicio y un nodo destino.
+•	Ambos nodos deben existir en el grafo (no se permite buscar rutas entre nodos inexistentes).
 4.	Ruta única o múltiple:
-	•	Si hay varias rutas con el mismo riesgo total, el algoritmo devuelve una de ellas (no todas).
+•	Si hay varias rutas con el mismo riesgo total, el algoritmo devuelve una de ellas (no todas).
 5.	Límites de tamaño:
-	•	Para la versión simple, el grafo debe ser de tamaño pequeño o mediano (ej. hasta 200 nodos).
-	•	Para la versión optimizada, se pueden manejar redes mucho más grandes
+•	Para la versión simple, el grafo debe ser de tamaño pequeño o mediano (ej. hasta 200 nodos).
+•	Para la versión optimizada, se pueden manejar redes mucho más grandes
