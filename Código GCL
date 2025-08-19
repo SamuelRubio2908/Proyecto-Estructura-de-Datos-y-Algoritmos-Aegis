@@ -1,33 +1,33 @@
-fun ruta_segura_opt (G: array of list of (int,int), s: int, t: int)
-    ret ruta: list of int, riesgo_total: int
+Algoritmo RutaSegura_Heap(G(V,E), s, t)
+    var dist[0..n-1], previo[0..n-1], visitado[0..n-1]      // O(n) memoria
+    var Q : minheap de pares (clave, nodo)                   // O(n) memoria
 
-var n, u, v, riesgo, nodo: int
-var dist: array [0:n) of int
-var previo: array [0:n) of int
-var visitado: array [0:n) of bool
-var Q: min_heap of (dist, nodo)
+    // Inicialización
+    para i := 0 hasta n-1 hacer                              // O(n)
+        dist[i] := ∞
+        previo[i] := -1
+        visitado[i] := falso
+    fin para
+    dist[s] := 0                                             // O(1)
+    insertar(Q, (0, s))                                      // O(log n)
 
-n := length(G)
-for i := 0 to n-1 →
-    dist[i] := ∞; previo[i] := -1; visitado[i] := false
-rof
-dist[s] := 0
-heap_push(Q, (0, s))
+    // Bucle principal de Dijkstra con heap
+    do Q ≠ vacío →                                           // Hasta O(n) extracciones
+        (d, u) := extraerMin(Q)                              // O(log n)
+        si visitado[u] → skip fi                             // O(1)
+        visitado[u] := verdadero                             // O(1)
 
-do ¬heap_empty(Q) →
-    ( _, u ) := heap_pop_min(Q)
-    if visitado[u] → skip [] ¬visitado[u] → visitado[u] := true fi
+        si u = t → salir od fi                               // O(1) (optimización: parada temprana)
 
-    for cada (v, riesgo) ∈ G[u] →
-        if ¬visitado[v] ∧ dist[u] + riesgo < dist[v] →
-            dist[v] := dist[u] + riesgo
-            previo[v] := u
-            heap_push(Q, (dist[v], v))  -- modela decrease-key
-        fi
-    rof
-od
+        // Relajaciones
+        para cada (v, riesgo) en G[u] →                      // Suma total sobre el algoritmo: O(m)
+            si ¬visitado[v] ∧ d + riesgo < dist[v] →         // O(1)
+                dist[v] := d + riesgo                        // O(1)
+                previo[v] := u                               // O(1)
+                insertar(Q, (dist[v], v))                    // O(log n) por relajación efectiva
+            fi
+        rof
+    od
 
--- reconstrucción como antes
-ruta := []; nodo := t
-do nodo ≠ -1 → insertar_al_inicio(ruta, nodo); nodo := previo[nodo] od
-riesgo_total := dist[t]
+    retornar reconstruirCamino(previo, t), dist[t]           // O(longitud de la ruta) ≤ O(n)
+Fin Algoritmo
