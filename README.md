@@ -80,7 +80,7 @@ Las principales características de los algoritmos voraces son las siguientes:
 
 ## Solución Formal
 #### Código GCL
-El algoritmo de Dijkstra es una técnica que nos permite encontrar el camino más corto (o en nuestro caso, el camino más seguro) entre un punto de origen y un destino dentro de un grafo ponderado.
+El algoritmo de Dijkstra es una técnica que nos permite encontrar el camino más corto entre un punto de origen y un destino dentro de un grafo ponderado.
 
 En el grafo:
 Los nodos representan puntos de conexión (por ejemplo, dispositivos, routers o servidores en una red).
@@ -113,6 +113,9 @@ Cómo funciona:
    - Al final, se reconstruye el camino usando el arreglo previo.
 
 
+
+
+
 ## Análisis de complejidad
 ### Tiempo
 El algoritmo de Dijkstra, cuando se implementa con un min-heap, que es la cola de prioridad, tiene la siguiente complejidad en tiempo:
@@ -139,34 +142,3 @@ La cola de prioridad min-heap puede crecer hasta O(m) en el peor caso (cuando mu
 
 Por lo tanto, el peso total en el espacio seria de:
 O(n+m)
-
-## Estructuras de datos usadas
-1. Lista de adyacencia: Representa el grafo como un diccionario o lista de listas. Tendría una estructura así:
-   {nodo: [(vecino, riesgo), ...]}>
-   Por ejemplo:
-   grafo = {
-     0: [(1, 5), (2, 2)], 
-     1: [(2, 1)], 
-     2: [(3, 3)] }}
-   
-   - Ventaja: eficiente en memoria cuando el grafo es disperso.
-   - ¿Por qué?: más realista para redes donde no todos los nodos están conectados entre sí.
-   
-3. Arreglo dist[]: Guarda el riesgo acumulado mínimo desde el nodo inicial hasta cada nodo.
-4. Arreglo prev[]: Permite reconstruir la ruta más segura al final del algoritmo.
-5. Cola de prioridad (mean-heap): Se usa para elegir siempre el nodo “más prometedor”, es decir, el de menor riesgo acumulado hasta ese momento.
-En Python se implementa con heapq.
-
-
-## Restricciones
-1.	Pesos de las aristas:
-   - Deben ser enteros positivos.
-   - Se definen en un rango, por ejemplo 1 = muy seguro, 10 = muy vulnerable.
-2.	Conectividad del grafo:
-   - El grafo debe ser conexo, es decir, que exista al menos una ruta entre cualquier par de nodos.
-   - Si el grafo no es conexo, el algoritmo debe indicar que no existe ruta segura.
-3.	Entrada válida:
-   - Se debe especificar un nodo de inicio y un nodo destino.
-   - Ambos nodos deben existir en el grafo (no se permite buscar rutas entre nodos inexistentes).
-4.	Ruta única o múltiple:
-   - Si hay varias rutas con el mismo riesgo total, el algoritmo devuelve una de ellas (no todas).
