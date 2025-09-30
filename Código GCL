@@ -1,33 +1,49 @@
-Algoritmo Dijkstra_Heap(G(V,E), s, t)
-    var dist[0..n-1], previo[0..n-1], visitado[0..n-1]      // O(n) memoria
-    var Q : minheap de pares (clave, nodo)                   // O(n) memoria
+import heapq  # Importa la librería para usar colas de prioridad (min-heap).
+# Complejidad: O(1) en tiempo y espacio (solo carga el módulo).
 
-    // --- Inicialización: O(n) ---
-    para i := 0 hasta n-1 hacer
-        dist[i] := ∞
-        previo[i] := -1
-        visitado[i] := falso
-    fin para
-    dist[s] := 0                                             // O(1)
-    insertar(Q, (0, s))                                      // O(log n)
+def dijkstra(grafo, origen):
+    # Inicializa las distancias a infinito para cada nodo del grafo
+    dist = {nodo: float('inf') for nodo in grafo}  
+    # Tiempo: O(V) donde V = número de vértices
+    # Espacio: O(V) para almacenar las distancias
 
-    // --- Bucle principal: O((n + m) log n) ---
-    do Q ≠ vacío →
-        (d, u) := extraerMin(Q)                              // O(log n)
-        si visitado[u] → skip fi                             // O(1)
-        visitado[u] := verdadero                             // O(1)
+    dist[origen] = 0  
+    # Tiempo: O(1)
+    # Espacio: ya está dentro del diccionario
 
-        si u = t → salir od fi                               // O(1) (optimización: parada temprana)
+    pq = [(0, origen)]  # Cola de prioridad con tupla (distancia, nodo)
+    # Tiempo: O(1)
+    # Espacio: O(1) inicial, pero puede crecer hasta O(V)
 
-        // --- Relajaciones ---
-        para cada (v, peso) en G[u] →                        // total O(m)
-            si ¬visitado[v] ∧ d + peso < dist[v] →           // O(1)
-                dist[v] := d + peso                          // O(1)
-                previo[v] := u                               // O(1)
-                insertar(Q, (dist[v], v))                    // O(log n) por relajación efectiva
-            fi
-        rof
-    od
+    while pq:  # Se ejecuta mientras haya elementos en la cola
+        # heapq.heappop extrae el menor elemento
+        distancia, nodo = heapq.heappop(pq)
+        # Tiempo: O(log V) por operación de heap
+        # Espacio: no adicional, solo variables locales
 
-    retornar reconstruirCamino(previo, t), dist[t]           // O(n) para la ruta
-Fin Algoritmo
+        if distancia > dist[nodo]:
+            continue  
+            # Tiempo: O(1)
+
+        # Recorremos vecinos del nodo
+        for vecino, peso in grafo[nodo]:  
+            # Tiempo: se ejecuta tantas veces como aristas E
+            # Espacio: O(1) variables locales
+
+            nueva_dist = distancia + peso  
+            # Tiempo: O(1)
+
+            if nueva_dist < dist[vecino]:  
+                # Tiempo: O(1) comparación
+
+                dist[vecino] = nueva_dist  
+                # Tiempo: O(1)
+                # Espacio: ya reservado en diccionario
+
+                heapq.heappush(pq, (nueva_dist, vecino))  
+                # Tiempo: O(log V) por inserción en heap
+                # Espacio: la cola puede almacenar hasta O(E) pares en el peor caso
+
+    return dist  
+    # Devuelve las distancias mínimas
+    # Espacio final: O(V)
