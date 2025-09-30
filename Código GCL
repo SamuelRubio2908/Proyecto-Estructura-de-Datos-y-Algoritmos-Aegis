@@ -1,1 +1,61 @@
+fun dijkstra(G(V,E,w): graph, s:V) ret dist: array[V]  
+# Declaración de la función.  
+# Tiempo: O(1)  
+# Espacio: depende del arreglo dist (O(V)) y de la cola de prioridad (O(V+E)).  
 
+var Q: priority_queue
+var v,u: V
+# Declaración de variables.  
+# Espacio:  
+#   Q: hasta O(V) o O(E) en el peor caso.  
+#   v, u: O(1).  
+
+for v ∈ V →
+    dist[v] := ∞
+od
+# Inicializa distancias a infinito.  
+# Tiempo: O(V)  
+# Espacio: O(V) para el arreglo dist.  
+
+dist[s] := 0
+# Asigna la distancia del origen.  
+# Tiempo: O(1)  
+# Espacio: ya reservado en dist.  
+
+Q := {s}
+# Inicializa la cola con el vértice de origen.  
+# Tiempo: O(1)  
+# Espacio: O(1) inicial (pero puede crecer después).  
+
+do Q ≠ ∅ →
+    u := extract_min(Q)
+    # Extrae el vértice con menor distancia.  
+    # Tiempo: O(log V) por operación de heap.  
+    # Se ejecuta hasta O(V) veces.  
+    # Espacio: no adicional, solo variables locales.  
+
+    for cada (u,v) ∈ E →
+        # Recorre las aristas salientes de u.  
+        # En total, todas las iteraciones suman O(E).  
+
+        if dist[u] + w(u,v) < dist[v] →
+            # Comparación de pesos.  
+            # Tiempo: O(1)  
+
+            dist[v] := dist[u] + w(u,v)
+            # Actualiza la distancia.  
+            # Tiempo: O(1)  
+            # Espacio: ya reservado en dist.  
+
+            insert(Q,v)
+            # Inserta un nodo en la cola de prioridad.  
+            # Tiempo: O(log V) por inserción.  
+            # Puede ejecutarse hasta O(E) veces en total.  
+        fi
+    od
+od
+
+ret dist
+# Devuelve el arreglo con distancias mínimas.  
+# Tiempo: O(1)  
+# Espacio: O(V)  
