@@ -1,14 +1,78 @@
 # Proyecto-Estructura-de-Datos-y-Algoritmos-Aegis
 Documentación, instrucciones, ejemplos
 
-## Problema Propuesto
-Actualmente, la mayoría de las personas en el mundo están expuestas al robo de información o datos, ya que nuestros datos están almacenados en diferentes sectores, como las entidades públicas, bancos y hospitales alrededor del mundo. Nosotros vimos que estos entornos son puntos vulnerables para sufrir algún ataque cibernético si no están equipados con mecanismos de seguridad adecuados, y los que están actualmente pueden resultar siendo no suficientes ante este riesgo, ya que la tecnología esta evolucionando en una velocidad sin precedentes. En este ámbito los atacantes o hackers aprovechan diversas vías para obtener información, entre ellas.
-Del mismo modo que vimos esta ventana en la ciberseguridad, en los últimos años se han presentado diversas noticias relacionadas a esta problemática y aunque algunas son más impactantes que otras, todas evidencian que puede llegar a afectar de una forma significativa en tres ámbitos: a nivel personal, que impacta directamente en los individuos, en el ámbito empresarial y a nivel social.
-En la perspectiva personal uno de los riesgos más recurrentes es el robo de identidad, en el cual se utilizan los datos mas importantes como el nombre, la cédula o la información bancaria para solicitar créditos y/o realizar compras de una manera fraudulenta, además de poder realizar extorsiiones a los sujetos compremetidos.
-De igual modo en el ámbito empresarial, las consecuencias suelen ser pérdidas económicas que se asocian a robos financieros, pero también pueden ser por sanciones legales gracias a el incumplimiento de normativas relacionadas a los tratamientos de datos o normativas de seguridad. Asi mismo se le suma que por este tipo de problemáticas en las empresas hay una fuga de clientes generado por la desconfianza en la empresa luego de una situación asi. Y en el último lugar esta el impacto de ataques como lo es el ransomware que es capaz de paralizar sistemas completos, lo que conlleva a interrumpir las operaciones del negocio.
-Finalmente vamos con el ámbito social, el cual podríamos ver la suplantación de identidad masiva que puede haber si usan todos los datos robados y su implementación pueden ser en fraudes electorales, crear cuentas falsas en las diferentes redes sociales, entre otras cosas. Además de ellos esta que pueden vender esta información a diferentes empresas o también en la “dark wed”. La última afectación es que las personas teman a usar servidores digitales lo que afectaría a la economía digital.
-Para concluir, al encontrar las afectaciones mencionadas anteriormente podemos ver que puede ser algo muy peligroso al estar en un mundo tan digitalizado y donde la información es tan importante. Por lo tanto, si no hayamos una solución para esta problemática, sabemos que existe varios sistemas de protección pero ninguna está especializada en el trato de datos. Además, la evolución de la tecnología ha hecho que los atacantes desarrollen métodos mas sofisticados, y por tanto se puede evidenciar que hay una necesidad de implementar mecanismos de seguridad más fuertes y robustos. Por ello es una prioridad que haya nuevas implementaciones en la seguridad digital.
-Nuestra motivación para abarcar esta problemática es que, como próximos ingenieros informáticos debemos pensar en que problemáticas hay en la era digital en la que nos encontramos ya que nosotros también hacemos parte de la generación que está recibiendo estos cambios y problemas, y los tendremos que abordar en los próximos años. Adicionalmente, cuando tomamos la decisión de formarnos también nos surgió la duda de en qué podríamos aportar al mundo y este proyecto fue una posible respuesta a esa pregunta.
+## Algoritmo Central del Proyecto
+
+### Contexto
+Nombre del algoritmo: Algoritmo de Dijkstra (Edsger Dijkstra, 1956).
+
+Explicación teórica:
+El algoritmo resuelve el problema de caminos más cortos en un grafo ponderado, dirigido o no dirigido y es muy importante que no puede tener pesos negativos. Además, construye de manera iterativa un árbol de caminos más cortos desde un vértice fuente `s` hasta todos los demás vértices. Y la estrategia que usa es un enfoque voráz o greedy (avaro), ya que en cada paso selecciona el vértice no visitado con la menor distancia conocida y actualiza las distancias de sus adyacentes.
+
+El resultado es el camino más corto desde la fuente.
+
+Lo que hace el algoritmo es algo así:
+1. Inicializa todas las distancias en ∞ (infinito) excepto la del vértice fuente (s), que se pone a 0.
+2. Usa una cola de prioridad (min-heap) para elegir y procesar siempre el vértice (u) con la menor distancia conocida desde la fuente.
+3. Para cada vecino (v) del vértice actual (u), intenta relajar (actualizar) la arista:
+```
+   si distancia[u] + peso(u,v) < distancia[v] 
+      entonces actualizar distancia[v] y añadir v a la cola
+```
+4. Repite hasta que la cola de prioridad esté vacía (es decir, hasta visitar todos los vértices alcanzables).
+
+El Resultado es el array dist que contendrá el costo mínimo del camino desde la fuente s hasta cada vértice v.
+
+#### Complejidad del algoritmo
+
+Temporal: O((V+E) log V)
+
+La clave está en la cola de prioridad ya que lo podemos ver la siguiente manera:
+- Cada extracción del vértice más cercano cuesta `O(log V)`.
+- Se hacen `V` extracciones, por lo tanto nos cuesta `O(V log V)`.
+- Cada arista `E` puede provocar una disminución de clave (`decrease-key`), por lo tnato costaría`O(E log V)`.
+
+Combinando, nos da una complejidad temporal **O((V+E) log V)**.
+
+Esto es más eficiente que la versión básica de Dijkstra con matriz de adyacencia (`O(V^2)`).
+
+Espacio: O(V+E)
+
+- O(V) para almacenar distancias, visitados y la cola de prioridad.
+- O(E) para guardar la representación del grafo (listas de adyacencia).
+- En total: **O(V+E)**.
+
+### ¿Qué hago con este algoritmo y donde se clasifica?
+El algoritmo de Dijkstra es un método clásico que se utiliza para encontrar el camino más corto desde un nodo de inicio hasta todos los demás nodos en un grafo que tiene pesos positivos. Este algoritmo se basa en un enfoque **voraz** (se clasifica dentro de los algoritmos voraces), lo que significa que en cada paso toma la decisión que parece más conveniente en ese momento, con la esperanza de llegar a la mejor solución en general.
+
+¿Cómo funciona?
+Primero, mantiene una lista de las distancias acumuladas desde el nodo de inicio. Luego, utiliza una cola de prioridad para asegurarse de elegir siempre el nodo con la menor distancia conocida. A medida que avanza, va actualizando las distancias de los nodos vecinos si encuentra un camino más corto.
+Las principales características de los algoritmos voraces son las siguientes:
+- Decisiones locales óptimas: en cada etapa, se elige la opción que parece ser la mejor en ese instante.
+- Irrevocabilidad: una vez que se toma una decisión, no se corrige ni se modifica más adelante.
+- Limitaciones: aunque no siempre garantizan la mejor solución global, son muy efectivos en problemas que cumplen con la propiedad de subestructura óptima y la elección voraz
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
