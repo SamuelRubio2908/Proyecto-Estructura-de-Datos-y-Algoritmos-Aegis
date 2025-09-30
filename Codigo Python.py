@@ -1,38 +1,37 @@
 import heapq
 
-def ruta_segura_heap(grafo, inicio, fin):
+def dijkstra_heap(grafo, inicio, fin):
     n = len(grafo)
-  
+
     # --- Inicialización: O(n) ---
-    dist = [float('inf')] * n          # distancia (riesgo acumulado) conocida más corta a cada nodo
-    previo = [-1] * n                  # para reconstruir la ruta
-    visitado = [False] * n             # marca nodos ya “fijados” (su dist es definitiva)
+    dist = [float('inf')] * n          # distancia más corta conocida hasta cada nodo
+    previo = [-1] * n                  # para reconstruir el camino
+    visitado = [False] * n             # nodos cuya distancia ya es definitiva
 
     dist[inicio] = 0.0
-    heap = [(0.0, inicio)]             # min-heap por riesgo: (riesgo_acumulado, nodo). push: O(log n)
+    heap = [(0.0, inicio)]             # min-heap: (distancia acumulada, nodo). Insertar: O(log n)
 
     # --- Bucle principal: O((n + m) log n) ---
     while heap:
-        d, u = heapq.heappop(heap)     # extraer el no visitado con menor riesgo. O(log n)
+        d, u = heapq.heappop(heap)     # extraer el nodo no visitado más cercano. O(log n)
         if visitado[u]:
-            continue                   # entrada obsoleta; ya fijamos u antes (O(1))
-        visitado[u] = True
+            continue                   # ignorar si ya fue procesado antes (O(1))
+        visitado[u] = True             # fijamos la distancia definitiva de u (O(1))
 
         if u == fin:
-            break                      # parada temprana: ya conocemos la mejor ruta a 'fin' (O(1))
+            break                      # parada temprana opcional (O(1))
 
-        # Relajar aristas de u: el total de iteraciones en todo el algoritmo es O(m)
-        for v, riesgo in grafo[u]:
-            # Si pasar por u mejora la mejor distancia conocida a v...
-            nd = d + riesgo
-            if nd < dist[v]:
+        # Relajación de aristas: en total O(m) veces
+        for v, peso in grafo[u]:
+            nd = d + peso
+            if nd < dist[v]:           # mejora encontrada
                 dist[v] = nd
                 previo[v] = u
-                heapq.heappush(heap, (nd, v))  # O(log n)
+                heapq.heappush(heap, (nd, v))  # insertar en heap. O(log n)
 
-    # --- Reconstrucción de la ruta: O(longitud de la ruta) ≤ O(n) ---
+    # --- Reconstrucción del camino: O(n) en el peor caso ---
     if dist[fin] == float('inf'):
-        return [], float('inf')         # inalcanzable
+        return [], float('inf')        # no hay ruta
 
     ruta = []
     nodo = fin
