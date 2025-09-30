@@ -1,9 +1,9 @@
-Algoritmo RutaSegura_Heap(G(V,E), s, t)
+Algoritmo Dijkstra_Heap(G(V,E), s, t)
     var dist[0..n-1], previo[0..n-1], visitado[0..n-1]      // O(n) memoria
     var Q : minheap de pares (clave, nodo)                   // O(n) memoria
 
-    // Inicialización
-    para i := 0 hasta n-1 hacer                              // O(n)
+    // --- Inicialización: O(n) ---
+    para i := 0 hasta n-1 hacer
         dist[i] := ∞
         previo[i] := -1
         visitado[i] := falso
@@ -11,23 +11,23 @@ Algoritmo RutaSegura_Heap(G(V,E), s, t)
     dist[s] := 0                                             // O(1)
     insertar(Q, (0, s))                                      // O(log n)
 
-    // Bucle principal de Dijkstra con heap
-    do Q ≠ vacío →                                           // Hasta O(n) extracciones
+    // --- Bucle principal: O((n + m) log n) ---
+    do Q ≠ vacío →
         (d, u) := extraerMin(Q)                              // O(log n)
         si visitado[u] → skip fi                             // O(1)
         visitado[u] := verdadero                             // O(1)
 
         si u = t → salir od fi                               // O(1) (optimización: parada temprana)
 
-        // Relajaciones
-        para cada (v, riesgo) en G[u] →                      // Suma total sobre el algoritmo: O(m)
-            si ¬visitado[v] ∧ d + riesgo < dist[v] →         // O(1)
-                dist[v] := d + riesgo                        // O(1)
+        // --- Relajaciones ---
+        para cada (v, peso) en G[u] →                        // total O(m)
+            si ¬visitado[v] ∧ d + peso < dist[v] →           // O(1)
+                dist[v] := d + peso                          // O(1)
                 previo[v] := u                               // O(1)
                 insertar(Q, (dist[v], v))                    // O(log n) por relajación efectiva
             fi
         rof
     od
 
-    retornar reconstruirCamino(previo, t), dist[t]           // O(longitud de la ruta) ≤ O(n)
+    retornar reconstruirCamino(previo, t), dist[t]           // O(n) para la ruta
 Fin Algoritmo
