@@ -52,42 +52,10 @@ Las principales características de los algoritmos voraces son las siguientes:
 - Irrevocabilidad: una vez que se toma una decisión, no se corrige ni se modifica más adelante.
 - Limitaciones: aunque no siempre garantizan la mejor solución global, son muy efectivos en problemas que cumplen con la propiedad de subestructura óptima y la elección voraz
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Solución Formal
-#### Código GCL
-El algoritmo de Dijkstra es una técnica que nos permite encontrar el camino más corto entre un punto de origen y un destino dentro de un grafo ponderado.
-
 En el grafo:
 Los nodos representan puntos de conexión (por ejemplo, dispositivos, routers o servidores en una red).
-Las aristas representan los enlaces entre esos nodos (las posibles conexiones).
-El peso de cada arista representa el “riesgo” o nivel de inseguridad de esa conexión (entre más bajo, más segura es).
-
-Nota: Como en nuestro proyecto el objetivo no es buscar rapidez sino seguridad, interpretamos los pesos como “riesgos de la red”, y buscamos el camino donde la suma de esos riesgos sea la menor posible.
+Las aristas representan los enlaces entre esos nodos (las posibles conexiones). El peso de cada arista representa la latencia o el ancho de banda (siendo 1/ancho de banda)
 
 Cómo Funciona:
    - Se asume que al inicio, todos los nodos están infinitamente lejos del origen (dist[i] = ∞).
@@ -111,34 +79,3 @@ Cómo funciona:
    - Mientras haya nodos en la cola, se va sacando el más prometedor.
    - Se actualizan las distancias de los vecinos si encontramos un camino más corto (más seguro).
    - Al final, se reconstruye el camino usando el arreglo previo.
-
-
-
-
-
-## Análisis de complejidad
-### Tiempo
-El algoritmo de Dijkstra, cuando se implementa con un min-heap, que es la cola de prioridad, tiene la siguiente complejidad en tiempo:
-
-Cada nodo puede ser insertado en la cola de prioridad varias veces, que es cuando se actualizan distancias.
-En el peor caso, se hacen hasta m inserciones y n extracciones, donde:
-
-n = número de nodos.
-m = número de aristas.
-
-Cada operación sobre el heap, osea, insertar o extraer mínimo, cuesta O(log n).
-
-Por eso, el tiempo total es:
-O((n+m) * log n)
-
-Aunque en grafos densos, es decir, con muchas aristas, esto se suele simplificar a:
-𝑂(𝑚 * log 𝑛)
-
-### Espacio
-El algoritmo de Dijkstra también necesita memoria extra además del grafo.
-El grafo mismo, si está representado con listas de adyacencia, ocupa O(n + m), porque cada nodo guarda sus vecinos y pesos.
-Los arreglos auxiliares (dist, previo, visitado) ocupan O(n).
-La cola de prioridad min-heap puede crecer hasta O(m) en el peor caso (cuando muchas aristas actualizan distancias).
-
-Por lo tanto, el peso total en el espacio seria de:
-O(n+m)
