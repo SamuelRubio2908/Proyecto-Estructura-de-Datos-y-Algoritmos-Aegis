@@ -52,7 +52,7 @@ Las principales características de los algoritmos voraces son las siguientes:
 - Irrevocabilidad: una vez que se toma una decisión, no se corrige ni se modifica más adelante.
 - Limitaciones: aunque no siempre garantizan la mejor solución global, son muy efectivos en problemas que cumplen con la propiedad de subestructura óptima y la elección voraz
 
-## Solución Formal
+### Solución Formal
 En el grafo:
 Los nodos representan puntos de conexión (por ejemplo, dispositivos, routers o servidores en una red).
 Las aristas representan los enlaces entre esos nodos (las posibles conexiones). El peso de cada arista representa la latencia o el ancho de banda (siendo 1/ancho de banda)
@@ -79,3 +79,53 @@ Cómo funciona:
    - Mientras haya nodos en la cola, se va sacando el más prometedor.
    - Se actualizan las distancias de los vecinos si encontramos un camino más corto (más seguro).
    - Al final, se reconstruye el camino usando el arreglo previo.
+
+
+### Breve recordatorio del proyecto 1
+
+El proyecto se llama Aegis, y busca crear un sistema capaz de vigilar y detectar comportamientos anormales como posibles ataques cibernéticos.
+
+La idea es que el sistema no solo monitoree el trafico de la red, sino que entienda como se muévela información dentro de la red también detectar cuando haya un riesgo para el usuario en la navegación que este realizando.
+
+Para que el sistema pueda hacer todo lo que queremos, representamos la red como un grafo, una estructura matemática que permite modelar las conexiones en los distintos dispositivos, de esta forma el grafo nos permitirá simular el comportamiento real del tráfico. El sistema de Aegis de esa manera podrá analizar cual es el mejor camino para enviar datos delicados y comparar si el rendimiento real de esa ruta coincide con lo esperado. En pocas palabras se busca supervisa la red donde habrá comunicación entre los nodos y alertará cuando algo no ande bien.
+
+### ¿Cómo este algoritmo soluciona parte del problema?
+
+El algoritmo que escogimos es Dijkstra, y es clave en Aegis porque permite que se encuentre la ruta mas segura, corta o eficiente entre los dispositivos de la red de forma rápida y precisa.
+
+Estas son las formas en como nos ayuda este algoritmo:
+1.	Modelo:
+Aegis toma los dispositivos y conexiones de la red y los convierte en un grafo ponderado cada enlace tiene un peso que representa su “costo”.
+2.	Ejecución del algoritmo:
+Dijkstra empieza desde un nodo origen, por ejemplo, el servidor principal y calcula la distancia mínima hacia todos los demás nodos. Lo hace avanzando de forma ordenada, siempre eligiendo el nodo con el menor costo acumulado hasta el momento esto se llama enfoque greedy o “avaro”. 
+3.	Resultados:
+El algoritmo construye un árbol de caminos mínimos. En este árbol, cada conexión representa la mejor ruta posible entre nodos, considerando el menor costo de transmisión.
+5.	Análisis de rendimiento:
+Una vez conocidas las rutas más eficientes teóricas, Aegis puede medir en tiempo real el desempeño real de cada enlace. Si el costo actual (por ejemplo, la latencia) es mucho mayor al esperado, se interpreta como una anomalía:
+•	Puede deberse a congestión de red.
+•	A una falla técnica.
+•	Incluso a un ataque de denegación de servicio (DoS) o infiltración.
+6.	Visualización y alertas:
+Aegis muestra gráficamente la ruta más corta y resalta con alertas los cuellos de botella o puntos críticos que puede haber en la navegación.
+
+En conclusión, Dijkstra le da a Aegis la capacidad de pensar de forma lógica: no solo encuentra las rutas óptimas, sino que aprende a reconocer cuándo algo no encaja con el comportamiento normal de la red lo que nos ayuda alertar al usuario. Todo lo que hace este algoritmo contribuye de una forma directa a la eficiencia y ciberseguridad en el sistema de Aegis.
+
+### Justifiación del uso del algoritmo
+Elegir el algoritmo de Dijkstra no es casualidad ya que había otras opciones como la fuerza bruta o los enfoques recursivos, pero al investigar sobre cada uno evidenciamos que el que mas concordaba con nosotros era Dijkstra en términos de eficiencia, complejidad y aplicabilidad real en redes modernas
+
+Un enfoque de fuerza bruta implicaría explorar todas las rutas posibles entre los nodos para identificar cual es la ruta más corta, lo que resulta computacionalmente irrealizable en las redes reales, y esto tiene una complejidad factorial (O(V!)), lo que significa que el tiempo de ejecución seria mayor incluso con pocos nodos. Un ejemplo de ello sería:
+•	En una red de 10 nodos, se podrían generar hasta 3,6 millones de rutas posibles.
+•	En una red de 20 nodos, el número sería astronómico, haciendo el cálculo imposible en tiempo razonable.
+
+Mientras que el algoritmo Dijkstra tiene una complejidad polinómica O((V + E) log V) gracias a su estrategia greedy (avara) y al uso de colas de prioridad, que permiten procesar los nodos más cercanos de una manera óptima.
+
+Este algoritmo hace todo esto:
+•	Evita exploraciones innecesarias, reduciendo radicalmente el tiempo de cómputo.
+•	Garantiza resultados óptimos en grafos con pesos positivos.
+•	Es el estándar en protocolos de enrutamiento modernos, como OSPF (Open Shortest Path First), que son utilizados en redes reales.
+Lo que puede hacer en nuestro sistema de Aegis seria:
+•	Analizar varios dispositivos y sus conexiones en segundos.
+•	Actualizar rutas dinámicamente ante cambios en la red.
+•	Detectar ataques o anomalías sin comprometer la velocidad de respuesta.
+
+Por tanto, Dijkstra es la elección más adecuada porque combina precisión óptima y eficiencia práctica, dos cualidades esenciales para un entorno de monitoreo y defensa cibernética en tiempo real.
