@@ -21,4 +21,6 @@ La salida esperado es lo siguiente:
 
 {'A': 0, 'B': 4, 'C': 2, 'E': 5, 'D': 9, 'F': 20}
 
-Como podemos ver, lo que nos arroja es la distancia mas corta encontrada desd eel punto hasta todos los demás puntos del grafo. En este caso, que es algo pequeño, podemos mirar cada valor y ver que la distancia hasta el punto F esta anormalmente alta, lo cual más allá de significar que va a ser mucho más demorado comunicarse con ese nodo, tambien puede representar que puede ser riesgoso ese camino porque si tiene tanta latencia en comparacion a los demás, puede ser por un riesgo en el camino.
+Como podemos ver, lo que nos arroja es la distancia mas corta encontrada desde el punto hasta todos los demás puntos del grafo. En este caso, que es algo pequeño, podemos mirar cada valor y ver que la distancia hasta el punto F esta anormalmente alta, lo cual más allá de significar que va a ser mucho más demorado comunicarse con ese nodo, tambien puede representar que puede ser riesgoso ese camino porque si tiene tanta latencia en comparacion a los demás, puede ser por un riesgo en el camino.
+
+
